@@ -12,13 +12,14 @@
 #define CLOCKWISE 0
 #define COUNTER_CLOCKWISE 1
 #define MOTOR_A 1
+#define eps 3
 int finish = 0;
 
 //Define Variables we'll be connecting to
 double Setpoint, Input, Output;
 
 //Specify the links and initial tuning parameters
-double Kp = 0, Ki = 0.1, Kd = 0;
+double Kp = 1, Ki = 0.1, Kd = 0;
 PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
 
@@ -36,37 +37,16 @@ void setup() {
 
   //initialize the variables we're linked to
   Input = analogRead(potPin);
-  Setpoint = 500;
+  Setpoint = 100;
 
-  //turn the PID on
-  myPID.SetMode(AUTOMATIC);
+  
+  myPID.SetSampleTime(3); // in ms
+  myPID.SetMode(AUTOMATIC); //turn the PID on
+  
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
-  int work = 1;
-
-
-  // send data only when you receive data:
-//  Serial.println("Please make a choice: ");
-//  Serial.println("1. Action 1");
-//  Serial.println("1. Action 2");
-//  Serial.println("1. Action 3");
-//  Serial.println("1. Action 4");
-  // and etc.
-
-  //  if (Serial.available() > 0) {
-  //    // read the incoming byte:
-  //    int option = Serial.read();
-  //
-  //    // say what you got:
-  //    Serial.print("The choice is : ");
-  //    Serial.println(option, DEC);
-  //
-  //  }
-
-
-  
   Input = analogRead(potPin);    // read the value from the sensor
   myPID.Compute();
   Serial.print("Input: ");
@@ -74,7 +54,17 @@ void loop() {
   Serial.print("Output: ");
   Serial.println(Output);
 //  Serial.println(myPID.GetITerm());
-  move(MOTOR_A, Output, CLOCKWISE);
+  if (Input<Setpoint-eps){
+    myPID.SetControllerDirection(DIRECT);
+    move(MOTOR_A, Output, CLOCKWISE);
+  }
+  else if(Input>Setpoint+eps){
+    myPID.SetControllerDirection(REVERSE);
+    move(MOTOR_A, Output, COUNTER_CLOCKWISE);
+  }
+  else{
+    stop();
+  }
   
 
 }
@@ -93,10 +83,7 @@ int action(int option) {
             stop();
             finish = 1;
           }
-
-
         }
-
         break;
       }
     case 2:
