@@ -48,11 +48,20 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
   Input = analogRead(potPin);    // read the value from the sensor
+  if(abs(Input-Setpoint)>50 ){
+    double Kp = 1, Ki = 0.1, Kd = 0;
+  }else{
+    double Kp = 50, Ki = 1, Kd = 0;
+  }
   myPID.Compute();
   Serial.print("Input: ");
   Serial.println(Input);
   Serial.print("Output: ");
   Serial.println(Output);
+
+
+
+  
 //  Serial.println(myPID.GetITerm());
   if (Input<Setpoint-eps){
     myPID.SetControllerDirection(DIRECT);
@@ -128,6 +137,3 @@ void stop() {
   //enable standby
   digitalWrite(STBY, LOW);
 }
-
-
-
