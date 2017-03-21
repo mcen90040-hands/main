@@ -56,14 +56,21 @@ void loop() {
   }
   if (Input-CurrentPosition>600){
     rev--;
+
+  if(abs(Input-Setpoint)>50 ){
+    double Kp = 1, Ki = 0.1, Kd = 0;
+  }else{
+    double Kp = 50, Ki = 1, Kd = 0;
   }
   myPID.Compute();
   Serial.print("Input: ");
   Serial.println(Input);
   Serial.print("Output: ");
   Serial.println(Output);
+
   Serial.print("Rev: ");
   Serial.println(rev);
+
 //  Serial.println(myPID.GetITerm());
   if (Input+rev*ONE_REV<Setpoint-eps){
     myPID.SetControllerDirection(DIRECT);
@@ -140,6 +147,3 @@ void stop() {
   //enable standby
   digitalWrite(STBY, LOW);
 }
-
-
-
