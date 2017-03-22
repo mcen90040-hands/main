@@ -18,7 +18,10 @@ int finish = 0;
 
 //Define Variables we'll be connecting to
 double Setpoint, CurrentPosition, Output,rev;
+
 int multiplier,LastPot, PotVal;
+
+
 
 //Specify the links and initial tuning parameters
 double Kp = 1, Ki = 0.1, Kd = 0;
@@ -42,6 +45,7 @@ void setup() {
   Setpoint = -3500;
   rev=0;
   LastPot = analogRead(potPin);
+
   
   myPID.SetSampleTime(3); // in ms
   myPID.SetMode(AUTOMATIC); //turn the PID on
@@ -50,12 +54,14 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
+
   PotVal = analogRead(potPin);    // read the value from the sensor
   CurrentPosition = PotVal+rev*ONE_REV;
   if (CurrentPosition-LastPot<-600){
     rev++;
   }
   if (CurrentPosition-LastPot>600){
+
     rev--;
   }
   if(abs(CurrentPosition-Setpoint)>50 ){
@@ -68,22 +74,27 @@ void loop() {
   Serial.println(CurrentPosition);
   Serial.print("Output: ");
   Serial.println(Output);
+
   Serial.print("Rev: ");
   Serial.println(rev);
 
 //  Serial.println(myPID.GetITerm());
+
   if (CurrentPosition<Setpoint-EPS){
     myPID.SetControllerDirection(DIRECT);
     move(MOTOR_A, Output, CLOCKWISE);
   }
   else if(CurrentPosition>Setpoint+EPS){
+
     myPID.SetControllerDirection(REVERSE);
     move(MOTOR_A, Output, COUNTER_CLOCKWISE);
   }
   else{
     stop();
   }
+
   LastPot=PotVal;
+
   
 
 }
