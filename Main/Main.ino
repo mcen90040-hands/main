@@ -1,4 +1,6 @@
+
 #include <header.h>
+
 
 // the setup routine runs once when you press reset:
 void setup() {
@@ -16,6 +18,7 @@ void setup() {
   Setpoint = -3500;
   rev=0;
   LastPot = analogRead(potPin);
+
   
   myPID.SetSampleTime(3); // in ms
   myPID.SetMode(AUTOMATIC); //turn the PID on
@@ -24,11 +27,14 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
+
   PotVal = analogRead(potPin);    // read the value from the sensor
   if (PotVal-LastPot<-600){
     rev++;
   }
+
   if (PotVal-LastPot>600){
+
     rev--;
   }
   CurrentPosition = PotVal+rev*ONE_REV;
@@ -42,15 +48,18 @@ void loop() {
   Serial.println(CurrentPosition);
   Serial.print("Output: ");
   Serial.println(Output);
+
   Serial.print("Rev: ");
   Serial.println(rev);
 
 //  Serial.println(myPID.GetITerm());
+
   if (CurrentPosition<Setpoint-EPS){
     myPID.SetControllerDirection(DIRECT);
     move(MOTOR_A, Output, CLOCKWISE);
   }
   else if(CurrentPosition>Setpoint+EPS){
+
     myPID.SetControllerDirection(REVERSE);
     move(MOTOR_A, Output, COUNTER_CLOCKWISE);
   }
