@@ -51,13 +51,13 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
   PotVal = analogRead(potPin);    // read the value from the sensor
-  CurrentPosition = PotVal+rev*ONE_REV;
-  if (CurrentPosition-LastPot<-600){
+  if (PotVal-LastPot<-600){
     rev++;
   }
-  if (CurrentPosition-LastPot>600){
+  if (PotVal-LastPot>600){
     rev--;
   }
+  CurrentPosition = PotVal+rev*ONE_REV;
   if(abs(CurrentPosition-Setpoint)>50 ){
     double Kp = 1, Ki = 0.1, Kd = 0;
   }else{
