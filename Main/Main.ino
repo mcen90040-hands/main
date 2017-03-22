@@ -12,17 +12,17 @@
 #define CLOCKWISE 0
 #define COUNTER_CLOCKWISE 1
 #define MOTOR_A 1
-#define eps 3
+#define EPS 3
 #define ONE_REV 1024
 int finish = 0;
 
 //Define Variables we'll be connecting to
-double Setpoint, Input, Output,rev;
-int multiplier,CurrentPosition;
+double Setpoint, CurrentPosition, Output,rev;
+int multiplier,LastPot, PotVal;
 
 //Specify the links and initial tuning parameters
 double Kp = 1, Ki = 0.1, Kd = 0;
-PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
+PID myPID(&CurrentPosition, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
 
 
@@ -38,10 +38,10 @@ void setup() {
   pinMode(AIN2, OUTPUT);
 
   //initialize the variables we're linked to
-  Input = analogRead(potPin);
+  CurrentPosition = analogRead(potPin);
   Setpoint = -3500;
   rev=0;
-  CurrentPosition = analogRead(potPin);
+  LastPosition = analogRead(potPin);
   
   myPID.SetSampleTime(3); // in ms
   myPID.SetMode(AUTOMATIC); //turn the PID on
@@ -50,33 +50,40 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  Input = analogRead(potPin);    // read the value from the sensor
-  if (Input-CurrentPosition<-600){
+  PotVal = analogRead(potPin);    // read the value from the sensor
+  CurrentPosition = PotVal+rev*ONE_REV;
+  if (CurrentPosition-LastPosition<-600){
     rev++;
   }
-  if (Input-CurrentPosition>600){
+  if (CurrentPosition-LastPosition>600){
     rev--;
   }
+  if(abs(CurrentPosition-Setpoint)>50 ){
+    double Kp = 1, Ki = 0.1, Kd = 0;
+  }else{
+    double Kp = 50, Ki = 1, Kd = 0;
+  }
   myPID.Compute();
-  Serial.print("Input: ");
-  Serial.println(Input);
+  Serial.print("CurrentPosition: ");
+  Serial.println(CurrentPosition);
   Serial.print("Output: ");
   Serial.println(Output);
   Serial.print("Rev: ");
   Serial.println(rev);
+
 //  Serial.println(myPID.GetITerm());
-  if (Input+rev*ONE_REV<Setpoint-eps){
+  if (CurrentPosition<Setpoint-EPS){
     myPID.SetControllerDirection(DIRECT);
     move(MOTOR_A, Output, CLOCKWISE);
   }
-  else if(Input+rev*ONE_REV>Setpoint+eps){
+  else if(CurrentPosition>Setpoint+EPS){
     myPID.SetControllerDirection(REVERSE);
     move(MOTOR_A, Output, COUNTER_CLOCKWISE);
   }
   else{
     stop();
   }
-  CurrentPosition=Input;
+  LastPot=PotVal;
   
 
 }
@@ -140,6 +147,3 @@ void stop() {
   //enable standby
   digitalWrite(STBY, LOW);
 }
-
-
-
