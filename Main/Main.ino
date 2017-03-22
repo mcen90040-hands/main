@@ -41,7 +41,7 @@ void setup() {
   CurrentPosition = analogRead(potPin);
   Setpoint = -3500;
   rev=0;
-  LastPosition = analogRead(potPin);
+  LastPot = analogRead(potPin);
   
   myPID.SetSampleTime(3); // in ms
   myPID.SetMode(AUTOMATIC); //turn the PID on
@@ -52,10 +52,10 @@ void setup() {
 void loop() {
   PotVal = analogRead(potPin);    // read the value from the sensor
   CurrentPosition = PotVal+rev*ONE_REV;
-  if (CurrentPosition-LastPosition<-600){
+  if (CurrentPosition-LastPot<-600){
     rev++;
   }
-  if (CurrentPosition-LastPosition>600){
+  if (CurrentPosition-LastPot>600){
     rev--;
   }
   if(abs(CurrentPosition-Setpoint)>50 ){
