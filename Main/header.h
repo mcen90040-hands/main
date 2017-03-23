@@ -1,4 +1,6 @@
 #include <PID_v1.h>
+#include <elapsedMillis.h>
+
 
 
 #define potPin 2 // select the input pin for the potentiometer A
@@ -14,8 +16,10 @@
 #define MOTOR_A 1
 #define EPS 3
 #define ONE_REV 1024
-#define EDGE_DETECTION 200
+#define EDGE_DETECTION 100
+#define TimeTolerance 100
 int finish = 0;
+elapsedMillis ElapsedTime;
 
 //Define Variables we'll be connecting to
 double Setpoint, CurrentPosition, Output,rev;
