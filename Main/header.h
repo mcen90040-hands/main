@@ -3,11 +3,11 @@
 
 
 
-#define potPin 2 // select the input pin for the potentiometer A
-#define PWMA 3 //Speed control
-#define AIN1 9 //Direction
-#define AIN2 8 //Direction
-#define STBY 10 //standby
+#define potPin A0 // select the input pin for the potentiometer A
+#define PWMA 2 //Speed control
+#define AIN1 24 //Direction
+#define AIN2 26//Direction
+#define STBY 22 //standby
 #define OFF 0
 #define FULL_SPEED 255
 #define HALF_SPEED 128
