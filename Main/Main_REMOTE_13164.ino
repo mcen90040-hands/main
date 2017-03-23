@@ -25,27 +25,20 @@ void setup() {
   
   myPID.SetSampleTime(3); // in ms
   myPID.SetMode(AUTOMATIC); //turn the PID on
+  
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
 
   PotVal = analogRead(potPin);    // read the value from the sensor
-  
-  if (PotVal-LastPot<-EDGE_DETECTION&&ElapsedTime>TimeTolerance){
-    ElapsedTime = 0;
+  if (PotVal-LastPot<-EDGE_DETECTION){
     rev++;
   }
-<<<<<<< HEAD
-  if (PotVal-LastPot>EDGE_DETECTION&&ElapsedTime>TimeTolerance){
-    ElapsedTime = 0;
-=======
 
   if (PotVal-LastPot>EDGE_DETECTION){
->>>>>>> dc0eedff7558a5e65de036b6e45cb3f0d9f9c283
     rev--;
   }
-  
   CurrentPosition = PotVal+rev*ONE_REV;
   if(abs(CurrentPosition-Setpoint)>50 ){
     double Kp = 1, Ki = 0.1, Kd = 0;
