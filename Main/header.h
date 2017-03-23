@@ -14,7 +14,7 @@
 #define CLOCKWISE 0
 #define COUNTER_CLOCKWISE 1
 #define MOTOR_A 1
-#define EPS 3
+#define EPS 50
 #define ONE_REV 1024
 #define EDGE_DETECTION 100
 #define TimeTolerance 100
