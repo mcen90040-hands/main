@@ -14,6 +14,7 @@
 #define MOTOR_A 1
 #define EPS 3
 #define ONE_REV 1024
+#define EDGE_DETECTION 200
 int finish = 0;
 
 //Define Variables we'll be connecting to
