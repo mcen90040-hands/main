@@ -12,11 +12,11 @@ void setup() {
   pinMode(AIN2, OUTPUT);
 
   //initialize the variables we're linked to
-  PotVal = analogRead(potPin);
-  Setpoint = 5000;
+  potVal = analogRead(potPin);
+  setPoint = 5000;
   rev = 0;
-  CurrentPosition = PotVal;
-  LastPot = CurrentPosition;
+  currentPosition = potVal;
+  lastPot = currentPosition;
 
   myPID.SetSampleTime(3); // in ms
   myPID.SetMode(AUTOMATIC); //turn the PID on
@@ -24,47 +24,54 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  PotVal = analogRead(potPin);    // read the value from the sensor
-
-  if (PotVal - LastPot < -EDGE_DETECTION && ElapsedTime > TimeTolerance) {
-    ElapsedTime = 0;
+  potVal = analogRead(potPin);    // read the value from the potentiometer sensor
+  
+  //determine if there is a new turn
+  if (potVal - lastPot < -EDGE_DETECTION && elapsedTime > TIME_TOLERANCE) {
+    elapsedTime = 0;
     rev++;
-  }
-  if (PotVal - LastPot > EDGE_DETECTION && ElapsedTime > TimeTolerance) {
-    ElapsedTime = 0;
+  }         
+  if (potVal - lastPot > EDGE_DETECTION && elapsedTime > TIME_TOLERANCE) {
+    elapsedTime = 0;
     rev--;
   }
 
-  CurrentPosition = PotVal + rev * ONE_REV;
-  if (abs(CurrentPosition - Setpoint) > 50 ) {
-    double Kp = 1, Ki = 0.1, Kd = 0;
-  } else {
-    double Kp = 50, Ki = 1, Kd = 0;
+  currentPosition = potVal + rev * ONE_REV;
+ 
+ //PID control 
+if (abs(currentPosition - setPoint) > 300 ) {
+    double Kp = 100, Ki = 0, Kd = 0;
+  }
+  else if (abs(currentPosition - setPoint) > 100 ){
+    double Kp = 10, Ki = 0, Kd = 0;
+  }
+  else {
+    double Kp = 1, Ki = 0, Kd = 0;
   }
   myPID.Compute();
   Serial.print("Pot: ");
-  Serial.println(PotVal);
-  Serial.print("CurrentPosition: ");
-  Serial.println(CurrentPosition);
-  Serial.print("Output: ");
-  Serial.println(Output);
+  Serial.println(potVal);
+  Serial.print("currentPosition: ");
+  Serial.println(currentPosition);
+  Serial.print("output: ");
+  Serial.println(output);
   Serial.print("Rev: ");
   Serial.println(rev);
   Serial.println();
   Serial.println();
 
   //  Serial.println(myPID.GetITerm());
-  if (CurrentPosition < Setpoint - EPS) {
+  if (currentPosition < setPoint - EPS) {
     myPID.SetControllerDirection(DIRECT);
-    move(MOTOR_A, Output, CLOCKWISE);
+    move(MOTOR_A, output, CLOCKWISE);
   }
-  else if (CurrentPosition > Setpoint + EPS) {
+  else if (currentPosition > setPoint + EPS) {
     myPID.SetControllerDirection(REVERSE);
-    move(MOTOR_A, Output, COUNTER_CLOCKWISE);
+    move(MOTOR_A, output, COUNTER_CLOCKWISE);
     Serial.println("Reverse ");
   }
   else {
     stop();
   }
-  LastPot = PotVal;
+  lastPot = potVal;
 }
