@@ -1,3 +1,5 @@
+// 2 PWM input might be used to reduce by 1 pinout
+
 void move(int motor, int speed, int direction) {
   //Move specific motor at speed and direction
 

@@ -9,6 +9,8 @@ void prtF(){
   Serial.println(output);
   Serial.print("Rev: ");
   Serial.println(rev);
+  Serial.print("Current: ");
+  Serial.println((double)cf1/1023*5/0.525);
   Serial.println();
   Serial.println();
 }

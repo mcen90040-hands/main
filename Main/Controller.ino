@@ -15,6 +15,7 @@ int controller(int motor, int currentPosition, int setPoint) {
 
 
 int gainSchedule(int currentPosition, int setPoint) {
+  
   if (abs(currentPosition - setPoint) > 300 ) {
     double Kp = 100, Ki = 0, Kd = 0;
   }
