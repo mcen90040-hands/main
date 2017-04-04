@@ -11,6 +11,7 @@ void prtF(){
   Serial.println(rev);
   Serial.print("Current: ");
   Serial.println((double)cf1/1023*5/0.525);
+  Serial.println(feedback());
   Serial.println();
   Serial.println();
 }

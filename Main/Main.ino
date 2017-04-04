@@ -13,7 +13,7 @@ void setup() {
 
   //initialize the variables we're linked to
   potVal = analogRead(potPin);
-  setPoint = 5000;
+  setPoint = 20000;
   rev = 0;
   currentPosition = potVal;
   lastPot = currentPosition;
@@ -36,11 +36,11 @@ void loop() {
   gainSchedule(currentPosition, setPoint);
 
   //Printing parameters for debugging
-  prtF();
+  prtF(); 
 
   //Motor Action
-  controller(MOTOR_A, currentPosition, setPoint);
-
+//  controller(MOTOR_A, currentPosition, setPoint);
+  move(1, 255, COUNTER_CLOCKWISE);
   //Update last pot value
   lastPot = potVal;
 }

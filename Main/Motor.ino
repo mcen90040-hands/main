@@ -18,6 +18,7 @@ void move(int motor, int speed, int direction) {
     digitalWrite(AIN2, inPin2);
     analogWrite(PWMA, speed);
   }
+  //multiple if to select motors
 }
 
 void stop() {
