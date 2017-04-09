@@ -6,17 +6,26 @@ void setup() {
   Serial.begin(115200);
 
   // Setting pin mode
-  pinMode(STBY, OUTPUT);
   pinMode(PWMA, OUTPUT);
+  pinMode(PWMB, OUTPUT);
+  pinMode(PWMC, OUTPUT);
+  pinMode(PWMD, OUTPUT);
+  
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
+  pinMode(BIN1, OUTPUT);
+  pinMode(BIN2, OUTPUT);
+  pinMode(CIN1, OUTPUT);
+  pinMode(CIN2, OUTPUT);
+  pinMode(DIN1, OUTPUT);
+  pinMode(DIN2, OUTPUT);
 
   //initialize the variables we're linked to
-  potVal = analogRead(potPin);
-  setPoint = 20000;
-  rev = 0;
-  currentPosition = potVal;
-  lastPot = currentPosition;
+  potValA = analogRead(POTA);
+  setPoint = 0;
+  revA = 0;
+  currentPositionA = potValA;
+  lastPotA = currentPositionA;
 
   myPID.SetSampleTime(3); // in ms
   myPID.SetMode(AUTOMATIC); //turn the PID on
@@ -24,23 +33,20 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  potVal = analogRead(potPin);    // read the value from the potentiometer sensor
-
+// read the value from the potentiometer sensor
+potValA = analogRead(POTA);
   //determine if there is a new turn
-  edgeDetect();
-
-  //determine the linearized current position
-  currentPosition = potVal + rev * ONE_REV;
+  currentPositionA = edgeDetect(1);
 
   //PID control
-  gainSchedule(currentPosition, setPoint);
+  gainSchedule(currentPositionA, setPointA);
 
   //Printing parameters for debugging
   prtF(); 
 
   //Motor Action
-//  controller(MOTOR_A, currentPosition, setPoint);
   move(1, 255, COUNTER_CLOCKWISE);
+ 
   //Update last pot value
-  lastPot = potVal;
+  lastPotA = potValA;
 }

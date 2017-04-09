@@ -1,6 +1,6 @@
 int feedback(){
-  cf1 = analogRead(FB1);
-  return cf1;
+  cfA = analogRead(FB1);
+  return cfA;
 }
 
 // TODO overcurrent detection

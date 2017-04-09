@@ -2,17 +2,6 @@ int action(int option) {
   int val = 0;
   switch (option) {
     case 1: {
-        //do something when var equals 1
-        int finish = 0;
-        move(MOTOR_A, HALF_SPEED, CLOCKWISE);
-        while (finish = 0) {
-          val = analogRead(potPin);    // read the value from the sensor
-          Serial.println(val);
-          if (val > 500) {
-            stop();
-            finish = 1;
-          }
-        }
         break;
       }
     case 2:

@@ -9,13 +9,13 @@ int controller(int motor, int currentPosition, int setPoint) {
     Serial.println("Reverse ");
   }
   else {
-    stop();
+    stop(motor);
   }
 }
 
 
 int gainSchedule(int currentPosition, int setPoint) {
-  
+
   if (abs(currentPosition - setPoint) > 300 ) {
     double Kp = 100, Ki = 0, Kd = 0;
   }
@@ -28,16 +28,56 @@ int gainSchedule(int currentPosition, int setPoint) {
   myPID.Compute();
 }
 
-int edgeDetect( ){
-    
-  if (potVal - lastPot < -EDGE_DETECTION && elapsedTime > TIME_TOLERANCE) {
-    elapsedTime = 0;
-    rev++;
-  }         
-  if (potVal - lastPot > EDGE_DETECTION && elapsedTime > TIME_TOLERANCE) {
-    elapsedTime = 0;
-    rev--;
+int edgeDetect(int motor) {
+  if (motor == MOTOR_A) {
+    if (potValA - lastPotA < -EDGE_DETECTION && elapsedTimeA > TIME_TOLERANCE) {
+      elapsedTimeA = 0;
+      revA++;
+    }
+    if (potValA - lastPotA > EDGE_DETECTION && elapsedTimeA > TIME_TOLERANCE) {
+      elapsedTimeA = 0;
+      revA--;
+    }
+    //determine the linearized current position
+    return potValA + revA * ONE_REV;
   }
-} 
+  else if (motor == MOTOR_B) {
+        if (potValB - lastPotB < -EDGE_DETECTION && elapsedTimeB > TIME_TOLERANCE) {
+      elapsedTimeB = 0;
+      revB++;
+    }
+    if (potValA - lastPotA > EDGE_DETECTION && elapsedTimeB > TIME_TOLERANCE) {
+      elapsedTimeB = 0;
+      revB--;
+    }
+    //determine the linearized current position
+    return potValB + revB * ONE_REV;
+  }
+  else if (motor == MOTOR_C) {
+         if (potValC - lastPotC < -EDGE_DETECTION && elapsedTimeC > TIME_TOLERANCE) {
+      elapsedTimeC = 0;
+      revC++;
+    }
+    if (potValC - lastPotC > EDGE_DETECTION && elapsedTimeC > TIME_TOLERANCE) {
+      elapsedTimeC = 0;
+      revC--;
+    }
+    //determine the linearized current position
+    return potValC + revC * ONE_REV;
+  }
+  else if (motor == MOTOR_D) {
+          if (potValD - lastPotD < -EDGE_DETECTION && elapsedTimeD > TIME_TOLERANCE) {
+      elapsedTimeC = 0;
+      revD++;
+    }
+    if (potValD - lastPotD > EDGE_DETECTION && elapsedTimeD > TIME_TOLERANCE) {
+      elapsedTimeD = 0;
+      revD--;
+    }
+    //determine the linearized current position
+    return potValD + revD * ONE_REV;
+  }
+
+}
 
 
