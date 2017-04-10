@@ -6,17 +6,26 @@ void setup() {
   Serial.begin(115200);
 
   // Setting pin mode
-  pinMode(STBY, OUTPUT);
   pinMode(PWMA, OUTPUT);
+  pinMode(PWMB, OUTPUT);
+  pinMode(PWMC, OUTPUT);
+  pinMode(PWMD, OUTPUT);
+
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
+  pinMode(BIN1, OUTPUT);
+  pinMode(BIN2, OUTPUT);
+  pinMode(CIN1, OUTPUT);
+  pinMode(CIN2, OUTPUT);
+  pinMode(DIN1, OUTPUT);
+  pinMode(DIN2, OUTPUT);
 
   //initialize the variables we're linked to
-  PotVal = analogRead(potPin);
-  Setpoint = 5000;
-  rev = 0;
-  CurrentPosition = PotVal;
-  LastPot = CurrentPosition;
+  potValA = analogRead(POTA);
+  setPoint = 0;
+  revA = 0;
+  currentPositionA = potValA;
+  lastPotA = currentPositionA;
 
   myPID.SetSampleTime(3); // in ms
   myPID.SetMode(AUTOMATIC); //turn the PID on
@@ -24,47 +33,10 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  PotVal = analogRead(potPin);    // read the value from the sensor
+  // read the value from the potentiometer sensor
+  potUpdate();
 
-  if (PotVal - LastPot < -EDGE_DETECTION && ElapsedTime > TimeTolerance) {
-    ElapsedTime = 0;
-    rev++;
-  }
-  if (PotVal - LastPot > EDGE_DETECTION && ElapsedTime > TimeTolerance) {
-    ElapsedTime = 0;
-    rev--;
-  }
+// Action 1
+action(1);
 
-  CurrentPosition = PotVal + rev * ONE_REV;
-  if (abs(CurrentPosition - Setpoint) > 50 ) {
-    double Kp = 1, Ki = 0.1, Kd = 0;
-  } else {
-    double Kp = 50, Ki = 1, Kd = 0;
-  }
-  myPID.Compute();
-  Serial.print("Pot: ");
-  Serial.println(PotVal);
-  Serial.print("CurrentPosition: ");
-  Serial.println(CurrentPosition);
-  Serial.print("Output: ");
-  Serial.println(Output);
-  Serial.print("Rev: ");
-  Serial.println(rev);
-  Serial.println();
-  Serial.println();
-
-  //  Serial.println(myPID.GetITerm());
-  if (CurrentPosition < Setpoint - EPS) {
-    myPID.SetControllerDirection(DIRECT);
-    move(MOTOR_A, Output, CLOCKWISE);
-  }
-  else if (CurrentPosition > Setpoint + EPS) {
-    myPID.SetControllerDirection(REVERSE);
-    move(MOTOR_A, Output, COUNTER_CLOCKWISE);
-    Serial.println("Reverse ");
-  }
-  else {
-    stop();
-  }
-  LastPot = PotVal;
 }

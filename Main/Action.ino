@@ -1,19 +1,28 @@
+int reset() {
+
+}
+
 int action(int option) {
   int val = 0;
   switch (option) {
     case 1: {
-        //do something when var equals 1
-        int finish = 0;
-        move(MOTOR_A, HALF_SPEED, CLOCKWISE);
-        while (finish = 0) {
-          val = analogRead(potPin);    // read the value from the sensor
-          Serial.println(val);
-          if (val > 500) {
-            stop();
-            finish = 1;
-          }
-        }
-        break;
+        //determine if there is a new turn
+        currentPositionA = edgeDetect(1);
+        currentPositionB = edgeDetect(2);
+        currentPositionC = edgeDetect(3);
+        currentPositionD = edgeDetect(4);
+
+        //PID control
+        gainSchedule(currentPositionA, setPointA);
+
+        //Printing parameters for debugging
+        prtF();
+
+        //Motor Action
+        move(1, 255, COUNTER_CLOCKWISE);
+
+        //Update last pot value
+        lastPotA = potValA;
       }
     case 2:
       //do something when var equals 2
