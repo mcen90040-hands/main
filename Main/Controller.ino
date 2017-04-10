@@ -1,19 +1,67 @@
 int controller(int motor, int currentPosition, int setPoint) {
-  if (currentPosition < setPoint - EPS) {
-    myPID.SetControllerDirection(DIRECT);
-    move(motor, output, CLOCKWISE);
+  int output;
+  if (motor == MOTOR_A) {
+    output = outputA;
+    if (currentPosition < setPoint - EPS) {
+      myPIDA.SetControllerDirection(DIRECT);
+      move(motor, output, CLOCKWISE);
+    }
+    else if (currentPosition > setPoint + EPS) {
+      myPIDA.SetControllerDirection(REVERSE);
+      move(motor, output, COUNTER_CLOCKWISE);
+    }
+    else {
+      stop(motor);
+    }
   }
-  else if (currentPosition > setPoint + EPS) {
-    myPID.SetControllerDirection(REVERSE);
-    move(motor, output, COUNTER_CLOCKWISE);
+  else if (motor == MOTOR_B) {
+    output = outputB;
+    if (currentPosition < setPoint - EPS) {
+      myPIDB.SetControllerDirection(DIRECT);
+      move(motor, output, CLOCKWISE);
+    }
+    else if (currentPosition > setPoint + EPS) {
+      myPIDB.SetControllerDirection(REVERSE);
+      move(motor, output, COUNTER_CLOCKWISE);
+    }
+    else {
+      stop(motor);
+    }
   }
-  else {
-    stop(motor);
-  } 
+  else if (motor == MOTOR_C) {
+    output = outputC;
+    if (currentPosition < setPoint - EPS) {
+      myPIDC.SetControllerDirection(DIRECT);
+      move(motor, output, CLOCKWISE);
+    }
+    else if (currentPosition > setPoint + EPS) {
+      myPIDC.SetControllerDirection(REVERSE);
+      move(motor, output, COUNTER_CLOCKWISE);
+    }
+    else {
+      stop(motor);
+    }
+  }
+  else if (motor == MOTOR_D) {
+    output = outputD;
+    if (currentPosition < setPoint - EPS) {
+      myPIDD.SetControllerDirection(DIRECT);
+      move(motor, output, CLOCKWISE);
+    }
+    else if (currentPosition > setPoint + EPS) {
+      myPIDD.SetControllerDirection(REVERSE);
+      move(motor, output, COUNTER_CLOCKWISE);
+    }
+    else {
+      stop(motor);
+    }
+  }
+
+
 }
 
 int gainSchedule(int currentPosition, int setPoint) {
-  
+
   if (abs(currentPosition - setPoint) > 300 ) {
     double Kp = 100, Ki = 0, Kd = 0;
   }
@@ -23,7 +71,10 @@ int gainSchedule(int currentPosition, int setPoint) {
   else {
     double Kp = 1, Ki = 0, Kd = 0;
   }
-  myPID.Compute();
+  myPIDA.Compute();
+  myPIDB.Compute();
+  myPIDC.Compute();
+  myPIDD.Compute();
 }
 
 int edgeDetect(int motor) {

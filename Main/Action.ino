@@ -6,20 +6,22 @@ int action(int option) {
         potValUpdate();
 
         //determine if there is a new turn
-        currentPositionC = edgeDetect(MOTOR_C);
-        currentPositionD = edgeDetect(MOTOR_D);
+        currentPositionB = edgeDetect(MOTOR_A);
+        currentPositionC = edgeDetect(MOTOR_B);
 
         //PID control
-        gainSchedule(currentPositionC, setPointC);
-        gainSchedule(currentPositionD, setPointD);
+        gainSchedule(currentPositionB, setPointB);
+        gainSchedule(currentPositionA, setPointA);
         //Printing parameters for debugging
         prtF();
 
         //Motor Action
-        controller(MOTOR_C, currentPositionC, setPointC);
-        controller(MOTOR_D, currentPositionD, setPointD);
-        
+  //      controller(MOTOR_B, currentPositionB, setPointB);
+       controller(MOTOR_A, currentPositionA, setPointA);
+
         //Update last pot value
+        lastPotA = potValA;
+        lastPotB = potValB;
         lastPotC = potValC;
         lastPotD = potValD;
         break;

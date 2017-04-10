@@ -65,11 +65,13 @@ int lastPotC, potValC;
 double setPointD, currentPositionD, outputD, revD = 0;
 int lastPotD, potValD;
 
-double currentPosition,output,setPoint;
 
 
 //Define Vs for current fb
 int cfA,cfB,cfC,cfD;
 //Specify the links and initial tuning parameters
 double Kp = 1, Ki = 0.1, Kd = 0;
-PID myPID(&currentPosition, &output, &setPoint, Kp, Ki, Kd, DIRECT);
+PID myPIDA(&currentPositionA, &outputA, &setPointA, Kp, Ki, Kd, DIRECT);
+PID myPIDB(&currentPositionB, &outputB, &setPointB, Kp, Ki, Kd, DIRECT);
+PID myPIDC(&currentPositionC, &outputC, &setPointC, Kp, Ki, Kd, DIRECT);
+PID myPIDD(&currentPositionD, &outputD, &setPointD, Kp, Ki, Kd, DIRECT);
