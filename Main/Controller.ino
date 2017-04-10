@@ -6,16 +6,14 @@ int controller(int motor, int currentPosition, int setPoint) {
   else if (currentPosition > setPoint + EPS) {
     myPID.SetControllerDirection(REVERSE);
     move(motor, output, COUNTER_CLOCKWISE);
-    Serial.println("Reverse ");
   }
   else {
     stop(motor);
-  }
+  } 
 }
 
-
 int gainSchedule(int currentPosition, int setPoint) {
-
+  
   if (abs(currentPosition - setPoint) > 300 ) {
     double Kp = 100, Ki = 0, Kd = 0;
   }
@@ -42,7 +40,7 @@ int edgeDetect(int motor) {
     return potValA + revA * ONE_REV;
   }
   else if (motor == MOTOR_B) {
-        if (potValB - lastPotB < -EDGE_DETECTION && elapsedTimeB > TIME_TOLERANCE) {
+    if (potValB - lastPotB < -EDGE_DETECTION && elapsedTimeB > TIME_TOLERANCE) {
       elapsedTimeB = 0;
       revB++;
     }
@@ -54,7 +52,7 @@ int edgeDetect(int motor) {
     return potValB + revB * ONE_REV;
   }
   else if (motor == MOTOR_C) {
-         if (potValC - lastPotC < -EDGE_DETECTION && elapsedTimeC > TIME_TOLERANCE) {
+    if (potValC - lastPotC < -EDGE_DETECTION && elapsedTimeC > TIME_TOLERANCE) {
       elapsedTimeC = 0;
       revC++;
     }
@@ -66,7 +64,7 @@ int edgeDetect(int motor) {
     return potValC + revC * ONE_REV;
   }
   else if (motor == MOTOR_D) {
-          if (potValD - lastPotD < -EDGE_DETECTION && elapsedTimeD > TIME_TOLERANCE) {
+    if (potValD - lastPotD < -EDGE_DETECTION && elapsedTimeD > TIME_TOLERANCE) {
       elapsedTimeC = 0;
       revD++;
     }

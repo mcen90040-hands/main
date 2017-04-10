@@ -1,15 +1,14 @@
 void prtF(){
   Serial.print("Pot: ");
-  Serial.println(potValA);
+  Serial.println(potValC);
   Serial.print("currentPosition: ");
-  Serial.println(currentPositionA);
+  Serial.println(currentPositionC);
   Serial.print("output: ");
-  Serial.println(outputA);
+  Serial.println(output);
   Serial.print("Rev: ");
-  Serial.println(revA);
+  Serial.println(revC);
   Serial.print("Current: ");
-  Serial.println((double)cfA/1023*5/0.525);
-  Serial.println(feedback());
+  Serial.println((double)cfC/1023*5/0.525);
   Serial.println();
   Serial.println();
 }

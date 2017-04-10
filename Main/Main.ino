@@ -10,7 +10,7 @@ void setup() {
   pinMode(PWMB, OUTPUT);
   pinMode(PWMC, OUTPUT);
   pinMode(PWMD, OUTPUT);
-  
+
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
   pinMode(BIN1, OUTPUT);
@@ -21,10 +21,12 @@ void setup() {
   pinMode(DIN2, OUTPUT);
 
   //initialize the variables we're linked to
-  potValA = analogRead(POTA);
-  setPoint = 0;
+  potValUpdate();
+  setPointD = 2500;
+  setPointC = 2500;
   revA = 0;
-  currentPositionA = potValA;
+  currentPositionC = potValC;
+  currentPositionD = potValD;
   lastPotA = currentPositionA;
 
   myPID.SetSampleTime(3); // in ms
@@ -33,20 +35,5 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-// read the value from the potentiometer sensor
-potValA = analogRead(POTA);
-  //determine if there is a new turn
-  currentPositionA = edgeDetect(1);
-
-  //PID control
-  gainSchedule(currentPositionA, setPointA);
-
-  //Printing parameters for debugging
-  prtF(); 
-
-  //Motor Action
-  move(1, 255, COUNTER_CLOCKWISE);
- 
-  //Update last pot value
-  lastPotA = potValA;
+  action(1);
 }
