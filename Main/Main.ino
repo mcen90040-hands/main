@@ -22,10 +22,6 @@ void setup() {
 
   //initialize the variables we're linked to
   potValUpdate();
-  setPointA = 2500;
-  setPointB = -5000;
-  setPointC = -8000;
-  setPointD = 8000;
 
   revA = 0;
   revB = 0;
