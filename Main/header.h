@@ -17,16 +17,16 @@
 #define BIN2 25 //Direction 2 for motor 1
 
 // Motor 3
-#define POT1 A10 // select the input pin for the potentiometer 1
+#define POTC A10 // select the input pin for the potentiometer 1
 #define PWMC 3 //Speed control 1
 #define FBC A2 //Current feedback for the motor 1 
 #define CIN1 26 //Direction 1 for motor 1
 #define CIN2 27 //Direction 2 for motor 1
 
 // Motor 4 
-#define POT1 A11 // select the input pin for the potentiometer 1
+#define POTD A11 // select the input pin for the potentiometer 1
 #define PWMD 2 //Speed control 1
-#define FB1 A3 //Current feedback for the motor 1 
+#define FBD A3 //Current feedback for the motor 1 
 #define DIN1 28 //Direction 1 for motor 1
 #define DIN2 29 //Direction 2 for motor 1
 
@@ -53,23 +53,25 @@ int finish = 0; //a token
 elapsedMillis elapsedTimeA,elapsedTimeB,elapsedTimeC,elapsedTimeD;
 
 //Define Variables we'll be connecting to
-double setPointA, currentPositionA, outputA, revA;
+double setPointA, currentPositionA, outputA, revA = 0;
 int lastPotA, potValA;
 
-double setPointB, currentPositionB, outputB, revB;
+double setPointB, currentPositionB, outputB, revB = 0;
 int lastPotB, potValB;
 
-double setPointC, currentPositionC, outputC, revC;
+double setPointC, currentPositionC, outputC, revC = 0;
 int lastPotC, potValC;
 
-double setPointD, currentPositionD, outputD, revD;
+double setPointD, currentPositionD, outputD, revD = 0;
 int lastPotD, potValD;
 
-double currentPosition,output,setPoint;
 
 
 //Define Vs for current fb
 int cfA,cfB,cfC,cfD;
 //Specify the links and initial tuning parameters
 double Kp = 1, Ki = 0.1, Kd = 0;
-PID myPID(&currentPosition, &output, &setPoint, Kp, Ki, Kd, DIRECT);
+PID myPIDA(&currentPositionA, &outputA, &setPointA, Kp, Ki, Kd, DIRECT);
+PID myPIDB(&currentPositionB, &outputB, &setPointB, Kp, Ki, Kd, DIRECT);
+PID myPIDC(&currentPositionC, &outputC, &setPointC, Kp, Ki, Kd, DIRECT);
+PID myPIDD(&currentPositionD, &outputD, &setPointD, Kp, Ki, Kd, DIRECT);

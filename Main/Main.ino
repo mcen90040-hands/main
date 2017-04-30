@@ -10,7 +10,7 @@ void setup() {
   pinMode(PWMB, OUTPUT);
   pinMode(PWMC, OUTPUT);
   pinMode(PWMD, OUTPUT);
-  
+
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
   pinMode(BIN1, OUTPUT);
@@ -21,32 +21,39 @@ void setup() {
   pinMode(DIN2, OUTPUT);
 
   //initialize the variables we're linked to
-  potValA = analogRead(POTA);
-  setPoint = 0;
-  revA = 0;
-  currentPositionA = potValA;
-  lastPotA = currentPositionA;
+  potValUpdate();
+  setPointA = 2500;
+  setPointB = -5000;
+  setPointC = -8000;
+  setPointD = 8000;
 
-  myPID.SetSampleTime(3); // in ms
-  myPID.SetMode(AUTOMATIC); //turn the PID on
+  revA = 0;
+  revB = 0;
+  revC = 0;
+  revD = 0;
+
+  currentPositionA = potValA;
+  currentPositionB = potValB;
+  currentPositionC = potValC;
+  currentPositionD = potValD;
+
+  lastPotA = currentPositionA;
+  lastPotB = currentPositionB;
+  lastPotC = currentPositionC;
+  lastPotD = currentPositionD;
+
+  myPIDA.SetSampleTime(3); // in ms
+  myPIDB.SetSampleTime(3); // in ms
+  myPIDC.SetSampleTime(3); // in ms
+  myPIDD.SetSampleTime(3); // in ms
+  
+  myPIDA.SetMode(AUTOMATIC); //turn the PID on
+  myPIDB.SetMode(AUTOMATIC); //turn the PID on
+  myPIDC.SetMode(AUTOMATIC); //turn the PID on
+  myPIDD.SetMode(AUTOMATIC); //turn the PID on
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
-// read the value from the potentiometer sensor
-potValA = analogRead(POTA);
-  //determine if there is a new turn
-  currentPositionA = edgeDetect(1);
-
-  //PID control
-  gainSchedule(currentPositionA, setPointA);
-
-  //Printing parameters for debugging
-  prtF(); 
-
-  //Motor Action
-  move(1, 255, COUNTER_CLOCKWISE);
- 
-  //Update last pot value
-  lastPotA = potValA;
+  action(1);
 }
