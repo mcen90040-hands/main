@@ -49,7 +49,8 @@
 #define TIME_TOLERANCE 100
 
 //global variables
-int finish = 0; //a token
+int incomingInt[4];   // for incoming serial data
+int actionFinish = 0; //Check whether the action is finished
 elapsedMillis elapsedTimeA,elapsedTimeB,elapsedTimeC,elapsedTimeD;
 
 //Define Variables we'll be connecting to
@@ -64,7 +65,6 @@ int lastPotC, potValC;
 
 double setPointD, currentPositionD, outputD, revD = 0;
 int lastPotD, potValD;
-
 
 
 //Define Vs for current fb
