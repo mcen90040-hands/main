@@ -116,7 +116,7 @@ int edgeDetect(int motor) {
   }
   else if (motor == MOTOR_D) {
     if (potValD - lastPotD < -EDGE_DETECTION && elapsedTimeD > TIME_TOLERANCE) {
-      elapsedTimeC = 0;
+      elapsedTimeD = 0;
       revD++;
     }
     if (potValD - lastPotD > EDGE_DETECTION && elapsedTimeD > TIME_TOLERANCE) {

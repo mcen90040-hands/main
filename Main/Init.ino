@@ -7,6 +7,8 @@ void Initialization(){
   pinMode(PWMB, OUTPUT);
   pinMode(PWMC, OUTPUT);
   pinMode(PWMD, OUTPUT);
+  pinMode(PWME, OUTPUT);
+  pinMode(PWMF, OUTPUT);
 
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
@@ -16,7 +18,14 @@ void Initialization(){
   pinMode(CIN2, OUTPUT);
   pinMode(DIN1, OUTPUT);
   pinMode(DIN2, OUTPUT);
+  pinMode(EIN1, OUTPUT);
+  pinMode(EIN2, OUTPUT);
+  pinMode(FIN1, OUTPUT);
+  pinMode(FIN2, OUTPUT);
 
+  pinMode(lowLED, OUTPUT);
+  pinMode(ENABLE, OUTPUT);
+  digitalWrite(ENABLE, HIGH);
   //initialize the variables linked to
   potValUpdate();
 
@@ -29,20 +38,33 @@ void Initialization(){
   currentPositionB = potValB;
   currentPositionC = potValC;
   currentPositionD = potValD;
+  currentPositionE = potValE;
+  currentPositionF = potValF;
 
   lastPotA = currentPositionA;
   lastPotB = currentPositionB;
   lastPotC = currentPositionC;
   lastPotD = currentPositionD;
+  lastPotE = currentPositionF;
+  lastPotE = currentPositionF;
 
-  myPIDA.SetSampleTime(3); // in ms
-  myPIDB.SetSampleTime(3); // in ms
-  myPIDC.SetSampleTime(3); // in ms
-  myPIDD.SetSampleTime(3); // in ms
+  myPIDA.SetSampleTime(SAMPLE); // in ms
+  myPIDB.SetSampleTime(SAMPLE); // in ms
+  myPIDC.SetSampleTime(SAMPLE); // in ms
+  myPIDD.SetSampleTime(SAMPLE); // in ms
+  myPIDE.SetSampleTime(SAMPLE); // in ms
+  myPIDF.SetSampleTime(SAMPLE); // in ms
   
   myPIDA.SetMode(AUTOMATIC); //turn the PID on
   myPIDB.SetMode(AUTOMATIC); //turn the PID on
   myPIDC.SetMode(AUTOMATIC); //turn the PID on
   myPIDD.SetMode(AUTOMATIC); //turn the PID on
+  myPIDE.SetMode(AUTOMATIC); //turn the PID on
+  myPIDF.SetMode(AUTOMATIC); //turn the PID on
+
+
+  if (analogRead(batDetect>batThreshold)){
+    digitalWrite(lowLED,HIGH);
+  }
 }
 

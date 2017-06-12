@@ -3,32 +3,46 @@
 
 // define constants for ports
 // Motor 1 
-#define POTA A8 // select the input pin for the potentiometer 1
-#define PWMA 2 //Speed control 1
+#define POTA A3 // select the input pin for the potentiometer 1
+#define PWMA 7 //Speed control 1
 #define FBA A0 //Current feedback for the motor 1 
-#define AIN1 22 //Direction 1 for motor 1
-#define AIN2 23 //Direction 2 for motor 1
+#define AIN1 12 //Direction 1 for motor 1
+#define AIN2 11 //Direction 2 for motor 1
 
 // Motor 2
-#define POTB A9 // select the input pin for the potentiometer 1
-#define PWMB 3 //Speed control 1
+#define POTB A2 // select the input pin for the potentiometer 1
+#define PWMB 4 //Speed control 1
 #define FBB A1 //Current feedback for the motor 1 
-#define BIN1 24 //Direction 1 for motor 1
-#define BIN2 25 //Direction 2 for motor 1
+#define BIN1 9 //Direction 1 for motor 1
+#define BIN2 8 //Direction 2 for motor 1
 
 // Motor 3
-#define POTC A10 // select the input pin for the potentiometer 1
-#define PWMC 4 //Speed control 1
-#define FBC A2 //Current feedback for the motor 1 
-#define CIN1 26 //Direction 1 for motor 1
-#define CIN2 27 //Direction 2 for motor 1
+#define POTC A7 // select the input pin for the potentiometer 1
+#define PWMC 5 //Speed control 1
+#define FBC A13 //Current feedback for the motor 1 
+#define CIN1 29 //Direction 1 for motor 1
+#define CIN2 39 //Direction 2 for motor 1
 
-// Motor 4 
-#define POTD A11 // select the input pin for the potentiometer 1
-#define PWMD 5 //Speed control 1
-#define FBD A3 //Current feedback for the motor 1 
-#define DIN1 28 //Direction 1 for motor 1
-#define DIN2 29 //Direction 2 for motor 1
+// Motor 4
+#define POTD A8 // select the input pin for the potentiometer 1
+#define PWMD 2 //Speed control 1
+#define FBD A14 //Current feedback for the motor 1 
+#define DIN1 26 //Direction 1 for motor 1
+#define DIN2 25 //Direction 2 for motor 1
+
+// Motor 5
+#define POTE A10 // select the input pin for the potentiometer 1
+#define PWME 3 //Speed control 1
+#define FBE A12 //Current feedback for the motor 1 
+#define EIN1 37 //Direction 1 for motor 1
+#define EIN2 36 //Direction 2 for motor 1
+
+// Motor 6
+#define POTF A11 // select the input pin for the potentiometer 1
+#define PWMF 6 //Speed control 1
+#define FBF A9 //Current feedback for the motor 1 
+#define FIN1 19 //Direction 1 for motor 1
+#define FIN2 18 //Direction 2 for motor 1
 
 
 //motors
@@ -36,11 +50,15 @@
 #define MOTOR_B 2
 #define MOTOR_C 3
 #define MOTOR_D 4
+#define MOTOR_E 5
+#define MOTOR_F 6
 
 // misc
 #define batDetect A15 // for low voltage detection
-#define batThreshold 700 //Minimum volt
-#define lowLED 
+#define batThreshold 650 //Minimum volt
+#define lowLED 53
+#define SAMPLE 5 //sample time
+#define ENABLE 38
 
 //commands
 #define OFF 0
@@ -71,12 +89,20 @@ int lastPotC, potValC;
 double setPointD, currentPositionD, outputD, revD = 0;
 int lastPotD, potValD;
 
+double setPointE, currentPositionE, outputE, revE = 0;
+int lastPotE, potValE;
+
+double setPointF, currentPositionF, outputF, revF = 0;
+int lastPotF, potValF;
+
 
 //Define Vs for current fb
-int cfA,cfB,cfC,cfD;
+int cfA,cfB,cfC,cfD,cfE,cfF;
 //Specify the links and initial tuning parameters
 double Kp = 1, Ki = 0.1, Kd = 0;
 PID myPIDA(&currentPositionA, &outputA, &setPointA, Kp, Ki, Kd, DIRECT);
 PID myPIDB(&currentPositionB, &outputB, &setPointB, Kp, Ki, Kd, DIRECT);
 PID myPIDC(&currentPositionC, &outputC, &setPointC, Kp, Ki, Kd, DIRECT);
 PID myPIDD(&currentPositionD, &outputD, &setPointD, Kp, Ki, Kd, DIRECT);
+PID myPIDE(&currentPositionE, &outputE, &setPointE, Kp, Ki, Kd, DIRECT);
+PID myPIDF(&currentPositionF, &outputF, &setPointF, Kp, Ki, Kd, DIRECT);
