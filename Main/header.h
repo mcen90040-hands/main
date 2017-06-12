@@ -37,6 +37,11 @@
 #define MOTOR_C 3
 #define MOTOR_D 4
 
+// misc
+#define batDetect A15 // for low voltage detection
+#define batThreshold 700 //Minimum volt
+#define lowLED 
+
 //commands
 #define OFF 0
 #define FULL_SPEED 255

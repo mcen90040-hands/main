@@ -18,4 +18,10 @@ int lastPotUpdate(){
   lastPotC = potValC;
   lastPotD = potValD;
 }
+
+int voltDetect(){
+  if (analogRead(batDetect<700)){
+    
+  }
+}
 // TODO overcurrent detection
