@@ -2,7 +2,7 @@ int action(int option) {
   int val = 0;
   switch (option) {
     case 1: {
-        setPointA = 13500;
+//        setPointA = 13500;
 //        setPointB = 3500;
 //        setPointC = 3500;
 //        setPointD = 3500;

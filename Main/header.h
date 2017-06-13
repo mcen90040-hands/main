@@ -73,7 +73,7 @@
 
 //global variables
 int incomingInt[4];   // for incoming serial data
-int actionFinish = 0; //Check whether the action is finished
+int actionFinish = 1; //Check whether the action is finished
 elapsedMillis elapsedTimeA,elapsedTimeB,elapsedTimeC,elapsedTimeD;
 
 //Define Variables we'll be connecting to
