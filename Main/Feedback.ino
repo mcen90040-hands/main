@@ -4,7 +4,7 @@ int feedback() {
   cfC = analogRead(FBC);
   cfD = analogRead(FBD);
   cfE = analogRead(FBE);
-  cfF = analogRead(FBF);
+//  cfF = analogRead(FBF);
 }
 
 int potValUpdate() {
@@ -13,7 +13,8 @@ int potValUpdate() {
   potValC = analogRead(POTC);
   potValD = analogRead(POTD);
   potValE = analogRead(POTE);
-  potValF = analogRead(POTF);
+//  potValF = analogRead(POTF);
+
 }
 
 int lastPotUpdate() {
@@ -22,16 +23,18 @@ int lastPotUpdate() {
   lastPotC = potValC;
   lastPotD = potValD;
   lastPotE = potValE;
-  lastPotF = potValF;
+//  lastPotF = potValF;
 }
 
 void voltDetect() {
-  while (analogRead(batDetect) < batThreshold) {
+  if (analogRead(batDetect) < batThreshold) {
     digitalWrite(lowLED, HIGH);
     delay(1000);
     digitalWrite(lowLED, LOW);
     delay(1000);
+  } else {
+    digitalWrite(lowLED, HIGH);
   }
-  digitalWrite(lowLED, HIGH);
+
 }
 // TODO overcurrent detection

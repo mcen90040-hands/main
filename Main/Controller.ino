@@ -2,6 +2,7 @@ int controller(int motor, int currentPosition, int setPoint) {
   int output;
   if (motor == MOTOR_A) {
     output = outputA;
+    Serial.print(output);
     if (currentPosition < setPoint - EPS) {
       myPIDA.SetControllerDirection(DIRECT);
       move(motor, output, CLOCKWISE);
@@ -44,6 +45,8 @@ int controller(int motor, int currentPosition, int setPoint) {
   }
   else if (motor == MOTOR_D) {
     output = outputD;
+    Serial.print("     ");
+    Serial.println(output);
     if (currentPosition < setPoint - EPS) {
       myPIDD.SetControllerDirection(DIRECT);
       move(motor, output, CLOCKWISE);
@@ -63,10 +66,10 @@ int controller(int motor, int currentPosition, int setPoint) {
 int gainSchedule(int currentPosition, int setPoint) {
 
   if (abs(currentPosition - setPoint) > 300 ) {
-    double Kp = 100, Ki = 0, Kd = 0;
+    double Kp = 10, Ki = 0, Kd = 0;
   }
   else if (abs(currentPosition - setPoint) > 100 ) {
-    double Kp = 10, Ki = 0, Kd = 0;
+    double Kp = 1, Ki = 0, Kd = 0;
   }
   else {
     double Kp = 1, Ki = 0, Kd = 0;
@@ -126,7 +129,28 @@ int edgeDetect(int motor) {
     //determine the linearized current position
     return potValD + revD * ONE_REV;
   }
+  else if (motor == MOTOR_E) {
+    if (potValE - lastPotE < -EDGE_DETECTION && elapsedTimeE > TIME_TOLERANCE) {
+      elapsedTimeD = 0;
+      revE++;
+    }
+    if (potValE - lastPotE > EDGE_DETECTION && elapsedTimeE > TIME_TOLERANCE) {
+      elapsedTimeE = 0;
+      revE--;
+    }
+    //determine the linearized current position
+    return potValE + revE * ONE_REV;
+  }
+}
 
+
+void setPointUpdate() {
+  setPointA = potValA;
+  setPointB = potValB;
+  setPointC = potValC;
+  setPointD = potValD;
+  setPointE = potValE;
+//  setPointF = potValF;
 }
 
 

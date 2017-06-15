@@ -8,7 +8,10 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
   serialRead();
-  //voltDetect();
+  // voltDetect();
+  feedback();
+  time_check();
   action(1);
-  delay(3);
+  prtF();
+  delay(20);
 }

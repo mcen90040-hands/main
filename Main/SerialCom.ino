@@ -1,6 +1,6 @@
-void serialRead(){
-  int p1, p2, p3, p4, p5, p6;
- 
+void serialRead() {
+  int p1, p2, p3, p4, p5;
+
   int readSuccess = 0;
   // send data only when you receive data:
   if (actionFinish == 1) {
@@ -8,23 +8,27 @@ void serialRead(){
     while (Serial.available() > 0) {
       // read the incoming int:
       incomingInt[i] = Serial.parseInt();
-      if (incomingInt[i] > 10000||incomingInt[i] < -10000) {// over the limit TODO
+      if (incomingInt[i] > 10000 || incomingInt[i] < -10000) { // over the limit TODO
         Serial.println("TOOOOOOOO big bro. ");
         readSuccess = 0;
         break;
       }
-      
+
       // say what you got: just for debugging
       Serial.print(i, DEC);
       Serial.print("I received: ");
       Serial.println(incomingInt[i], DEC);
-      // Only read the first four int
-      if (i == 5) {
+      // Only read the first six int
+      if (i == 4) {
         readSuccess = 1;
+        while (Serial.available() > 0) {
+          char t = Serial.read();// clear buffer
+        }
         break;
       }
       i++;
     }
+
   }
   if (readSuccess == 1) {
 
@@ -33,7 +37,7 @@ void serialRead(){
     p3 = incomingInt[2];
     p4 = incomingInt[3];
     p5 = incomingInt[4];
-    p6 = incomingInt[5];
+    actionTime = 0;
     // Just for debugging
     Serial.println("Positions are updated! ");
     Serial.print("P1=  ");
@@ -46,15 +50,12 @@ void serialRead(){
     Serial.println(p4, DEC);
     Serial.print("P5=  ");
     Serial.println(p5, DEC);
-    Serial.print("P5=  ");
-    Serial.println(p6, DEC);
     //actionFinish = 0;
-    setPointA=p1;
-    setPointB=p2;
-    setPointC=p3;
-    setPointD=p4;
-    setPointE=p5;
-    setPointF=p6;
+    setPointA = p1;
+    setPointB = p2;
+    setPointC = p3;
+    setPointD = p4;
+    setPointE = p5;
   }
 }
 

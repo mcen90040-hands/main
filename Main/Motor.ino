@@ -35,11 +35,11 @@ void move(int motor, int speed, int direction) {
     digitalWrite(EIN2, inPin2);
     analogWrite(PWME, speed);
   }
-  else if (motor == MOTOR_F) {
-    digitalWrite(FIN1, inPin1);
-    digitalWrite(FIN2, inPin2);
-    analogWrite(PWMF, speed);
-  }
+//  else if (motor == MOTOR_F) {
+//    digitalWrite(FIN1, inPin1);
+//    digitalWrite(FIN2, inPin2);
+//    analogWrite(PWMF, speed);
+//  }
   //multiple if to select motors
 }
 
@@ -60,7 +60,7 @@ void stop(int motor) {
   else if (motor == MOTOR_E) {
     digitalWrite(PWME, 0);
   }
-  else if (motor == MOTOR_F) {
-    digitalWrite(PWMF, 0);
-  }
+//  else if (motor == MOTOR_F) {
+//    digitalWrite(PWMF, 0);
+//  }
 }

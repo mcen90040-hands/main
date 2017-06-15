@@ -6,8 +6,8 @@
 #define POTA A3 // select the input pin for the potentiometer 1
 #define PWMA 7 //Speed control 1
 #define FBA A0 //Current feedback for the motor 1 
-#define AIN1 12 //Direction 1 for motor 1
-#define AIN2 11 //Direction 2 for motor 1
+#define AIN1 11 //Direction 1 for motor 1
+#define AIN2 12 //Direction 2 for motor 1
 
 // Motor 2
 #define POTB A2 // select the input pin for the potentiometer 1
@@ -27,8 +27,8 @@
 #define POTD A8 // select the input pin for the potentiometer 1
 #define PWMD 2 //Speed control 1
 #define FBD A14 //Current feedback for the motor 1 
-#define DIN1 26 //Direction 1 for motor 1
-#define DIN2 25 //Direction 2 for motor 1
+#define DIN1 25 //Direction 1 for motor 1
+#define DIN2 26 //Direction 2 for motor 1
 
 // Motor 5
 #define POTE A10 // select the input pin for the potentiometer 1
@@ -55,10 +55,12 @@
 
 // misc
 #define batDetect A15 // for low voltage detection
-#define batThreshold 650 //Minimum volt
+#define batThreshold 620 //Minimum volt
 #define lowLED 53
-#define SAMPLE 5 //sample time
+#define SAMPLE 25 //sample time
 #define ENABLE 38
+#define PWMMAX 170
+#define PWMMIN 0
 
 //commands
 #define OFF 0
@@ -66,15 +68,17 @@
 #define HALF_SPEED 128
 #define CLOCKWISE 0
 #define COUNTER_CLOCKWISE 1
-#define EPS 500
+#define EPS 20
 #define ONE_REV 1024
-#define EDGE_DETECTION 100
+#define EDGE_DETECTION 400
 #define TIME_TOLERANCE 100
+#define ACTION_TIME 2000
 
 //global variables
 int incomingInt[4];   // for incoming serial data
 int actionFinish = 1; //Check whether the action is finished
-elapsedMillis elapsedTimeA,elapsedTimeB,elapsedTimeC,elapsedTimeD;
+elapsedMillis elapsedTimeA,elapsedTimeB,elapsedTimeC,elapsedTimeD,elapsedTimeE;
+elapsedMillis actionTime;
 
 //Define Variables we'll be connecting to
 double setPointA, currentPositionA, outputA, revA = 0;
@@ -92,17 +96,17 @@ int lastPotD, potValD;
 double setPointE, currentPositionE, outputE, revE = 0;
 int lastPotE, potValE;
 
-double setPointF, currentPositionF, outputF, revF = 0;
-int lastPotF, potValF;
-
+//double setPointF, currentPositionF, outputF, revF = 0;
+//int lastPotF, potValF;
+int option,en_state;
 
 //Define Vs for current fb
 int cfA,cfB,cfC,cfD,cfE,cfF;
 //Specify the links and initial tuning parameters
-double Kp = 1, Ki = 0.1, Kd = 0;
+double Kp = 0.5, Ki = 0, Kd = 0;
 PID myPIDA(&currentPositionA, &outputA, &setPointA, Kp, Ki, Kd, DIRECT);
 PID myPIDB(&currentPositionB, &outputB, &setPointB, Kp, Ki, Kd, DIRECT);
 PID myPIDC(&currentPositionC, &outputC, &setPointC, Kp, Ki, Kd, DIRECT);
 PID myPIDD(&currentPositionD, &outputD, &setPointD, Kp, Ki, Kd, DIRECT);
 PID myPIDE(&currentPositionE, &outputE, &setPointE, Kp, Ki, Kd, DIRECT);
-PID myPIDF(&currentPositionF, &outputF, &setPointF, Kp, Ki, Kd, DIRECT);
+//PID myPIDF(&currentPositionF, &outputF, &setPointF, Kp, Ki, Kd, DIRECT);
