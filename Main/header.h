@@ -1,3 +1,4 @@
+#include <MyoController.h>
 #include <PID_v1.h>
 #include <elapsedMillis.h>
 
@@ -20,8 +21,8 @@
 #define POTC A7 // select the input pin for the potentiometer 1
 #define PWMC 5 //Speed control 1
 #define FBC A13 //Current feedback for the motor 1 
-#define CIN1 29 //Direction 1 for motor 1
-#define CIN2 39 //Direction 2 for motor 1
+#define CIN1 39 //Direction 1 for motor 1
+#define CIN2 29 //Direction 2 for motor 1
 
 // Motor 4
 #define POTD A8 // select the input pin for the potentiometer 1
@@ -98,7 +99,7 @@ int lastPotE, potValE;
 
 //double setPointF, currentPositionF, outputF, revF = 0;
 //int lastPotF, potValF;
-int option,en_state;
+int option = 10,en_state;
 
 //Define Vs for current fb
 int cfA,cfB,cfC,cfD,cfE,cfF;
@@ -110,3 +111,5 @@ PID myPIDC(&currentPositionC, &outputC, &setPointC, Kp, Ki, Kd, DIRECT);
 PID myPIDD(&currentPositionD, &outputD, &setPointD, Kp, Ki, Kd, DIRECT);
 PID myPIDE(&currentPositionE, &outputE, &setPointE, Kp, Ki, Kd, DIRECT);
 //PID myPIDF(&currentPositionF, &outputF, &setPointF, Kp, Ki, Kd, DIRECT);
+
+MyoController myo = MyoController();

@@ -29,11 +29,8 @@ int lastPotUpdate() {
 void voltDetect() {
   if (analogRead(batDetect) < batThreshold) {
     digitalWrite(lowLED, HIGH);
-    delay(1000);
-    digitalWrite(lowLED, LOW);
-    delay(1000);
   } else {
-    digitalWrite(lowLED, HIGH);
+    digitalWrite(lowLED, LOW);
   }
 
 }

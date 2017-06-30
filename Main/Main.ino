@@ -1,5 +1,6 @@
 #include "header.h"
 
+
 // the setup routine runs once when you press reset:
 void setup() {
   Initialization();
@@ -7,11 +8,12 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  serialRead();
+  blue();
   // voltDetect();
+
   feedback();
   time_check();
-  action(1);
-  prtF();
+  action(option);
+  
   delay(20);
 }

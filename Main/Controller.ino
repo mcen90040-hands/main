@@ -46,7 +46,7 @@ int controller(int motor, int currentPosition, int setPoint) {
   else if (motor == MOTOR_D) {
     output = outputD;
     Serial.print("     ");
-    Serial.println(output);
+    Serial.print(output);
     if (currentPosition < setPoint - EPS) {
       myPIDD.SetControllerDirection(DIRECT);
       move(motor, output, CLOCKWISE);
@@ -55,13 +55,27 @@ int controller(int motor, int currentPosition, int setPoint) {
       myPIDD.SetControllerDirection(REVERSE);
       move(motor, output, COUNTER_CLOCKWISE);
     }
-    else {
-      stop(motor);
+  }
+  else if (motor == MOTOR_E) {
+    output = outputE;
+    Serial.print("     ");
+    Serial.println(output);
+    if (currentPosition < setPoint - EPS) {
+      myPIDE.SetControllerDirection(DIRECT);
+      move(motor, output, CLOCKWISE);
+    }
+    else if (currentPosition > setPoint + EPS) {
+      myPIDE.SetControllerDirection(REVERSE);
+      move(motor, output, COUNTER_CLOCKWISE);
     }
   }
-
-
+  else {
+    stop(motor);
+  }
 }
+
+
+
 
 int gainSchedule(int currentPosition, int setPoint) {
 
@@ -78,6 +92,7 @@ int gainSchedule(int currentPosition, int setPoint) {
   myPIDB.Compute();
   myPIDC.Compute();
   myPIDD.Compute();
+  myPIDE.Compute();
 }
 
 int edgeDetect(int motor) {
@@ -98,7 +113,7 @@ int edgeDetect(int motor) {
       elapsedTimeB = 0;
       revB++;
     }
-    if (potValA - lastPotA > EDGE_DETECTION && elapsedTimeB > TIME_TOLERANCE) {
+    if (potValB - lastPotB > EDGE_DETECTION && elapsedTimeB > TIME_TOLERANCE) {
       elapsedTimeB = 0;
       revB--;
     }
@@ -150,7 +165,7 @@ void setPointUpdate() {
   setPointC = potValC;
   setPointD = potValD;
   setPointE = potValE;
-//  setPointF = potValF;
+  //  setPointF = potValF;
 }
 
 

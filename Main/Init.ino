@@ -2,6 +2,7 @@ void Initialization(){
     // Initial serial com
   Serial.begin(115200);
 
+  myo.initMyo();
   // Setting pin mode
   pinMode(PWMA, OUTPUT);
   pinMode(PWMB, OUTPUT);
@@ -72,7 +73,7 @@ void Initialization(){
 
 
   if (analogRead(batDetect>batThreshold)){
-    digitalWrite(lowLED,HIGH);
+    digitalWrite(lowLED,LOW);
   }
   setPointUpdate();
 }
