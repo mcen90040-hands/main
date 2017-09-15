@@ -2,7 +2,7 @@ void Initialization(){
     // Initial serial com
   Serial.begin(115200);
 
-  myo.initMyo();
+  //myo.initMyo();
   // Setting pin mode
   pinMode(PWMA, OUTPUT);
   pinMode(PWMB, OUTPUT);

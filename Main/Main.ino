@@ -8,12 +8,13 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  blue();
-  // voltDetect();
-
+  //blue();
+  serialRead();
+  voltDetect();
+  prtF();
   feedback();
   time_check();
-  action(option);
+  action(1);
   
   delay(20);
 }

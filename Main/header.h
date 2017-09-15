@@ -7,15 +7,15 @@
 #define POTA A3 // select the input pin for the potentiometer 1
 #define PWMA 7 //Speed control 1
 #define FBA A0 //Current feedback for the motor 1 
-#define AIN1 11 //Direction 1 for motor 1
-#define AIN2 12 //Direction 2 for motor 1
+#define AIN1 12 //Direction 1 for motor 1
+#define AIN2 11 //Direction 2 for motor 1
 
 // Motor 2
 #define POTB A2 // select the input pin for the potentiometer 1
 #define PWMB 4 //Speed control 1
 #define FBB A1 //Current feedback for the motor 1 
-#define BIN1 9 //Direction 1 for motor 1
-#define BIN2 8 //Direction 2 for motor 1
+#define BIN1 8 //Direction 1 for motor 1
+#define BIN2 9 //Direction 2 for motor 1
 
 // Motor 3
 #define POTC A7 // select the input pin for the potentiometer 1
